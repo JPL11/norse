@@ -109,11 +109,11 @@ def li_step(
     i_jump = state.i + torch.nn.functional.linear(input_spikes, input_weights)
 
     # compute voltage updates
-    dv = dt * p.tau_mem_inv * ((p.v_leak - state.v) + i_jump)
+    dv = dt * (p.tau_mem_inv * ((p.v_leak - state.v) + i_jump))
     v_new = state.v + dv
 
     # compute current updates
-    di = -dt * p.tau_syn_inv * i_jump
+    di = -dt * (p.tau_syn_inv * i_jump)
     i_decayed = i_jump + di
 
     return v_new, LIState(v_new.clone(), i_decayed)
@@ -128,11 +128,11 @@ def li_feed_forward_step(
     # compute current jumps
     i_jump = state.i + input_tensor
     # compute voltage updates
-    dv = dt * p.tau_mem_inv * ((p.v_leak - state.v) + i_jump)
+    dv = dt * (p.tau_mem_inv * ((p.v_leak - state.v) + i_jump))
     v_new = state.v + dv
 
     # compute current updates
-    di = -dt * p.tau_syn_inv * i_jump
+    di = -dt * (p.tau_syn_inv * i_jump)
     i_decayed = i_jump + di
 
     return v_new, LIState(v_new.clone(), i_decayed)
