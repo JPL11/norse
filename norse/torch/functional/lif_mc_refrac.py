@@ -20,13 +20,13 @@ def lif_mc_refrac_step(
     # compute whether neurons are refractory or not
     refrac_mask = threshold(state.rho, p.lif.method, p.lif.alpha)
     # compute voltage
-    dv = (1 - refrac_mask) * dt * p.lif.tau_mem_inv * (
-        (p.lif.v_leak - state.lif.v) + state.lif.i
+    dv = (1 - refrac_mask) * dt * (
+        p.lif.tau_mem_inv * ((p.lif.v_leak - state.lif.v) + state.lif.i)
     ) + torch.nn.functional.linear(state.lif.v, g_coupling)
     v_decayed = state.lif.v + dv
 
     # compute current updates
-    di = -dt * p.lif.tau_syn_inv * state.lif.i
+    di = -dt * (p.lif.tau_syn_inv * state.lif.i)
     i_decayed = state.lif.i + di
 
     # compute new spikes
@@ -59,13 +59,13 @@ def lif_mc_refrac_feed_forward_step(
     # compute whether neurons are refractory or not
     refrac_mask = threshold(state.rho, p.lif.method, p.lif.alpha)
     # compute voltage
-    dv = (1 - refrac_mask) * dt * p.lif.tau_mem_inv * (
-        (p.lif.v_leak - state.lif.v) + state.lif.i
+    dv = (1 - refrac_mask) * dt * (
+        p.lif.tau_mem_inv * ((p.lif.v_leak - state.lif.v) + state.lif.i)
     ) + torch.nn.functional.linear(state.lif.v, g_coupling)
     v_decayed = state.lif.v + dv
 
     # compute current updates
-    di = -dt * p.lif.tau_syn_inv * state.lif.i
+    di = -dt * (p.lif.tau_syn_inv * state.lif.i)
     i_decayed = state.lif.i + di
 
     # compute new spikes

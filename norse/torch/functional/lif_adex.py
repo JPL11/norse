@@ -134,15 +134,15 @@ def lif_adex_step(
     # compute voltage updates
     dv_leak = p.v_leak - state.v
     dv_exp = p.delta_T * torch.exp((state.v - p.v_th) / p.delta_T)
-    dv = dt * p.tau_mem_inv * (dv_leak + dv_exp + i_jump - state.a)
+    dv = dt * (p.tau_mem_inv * (dv_leak + dv_exp + i_jump - state.a))
     v_decayed = state.v + dv
 
     # compute current updates
-    di = -dt * p.tau_syn_inv * i_jump
+    di = -dt * (p.tau_syn_inv * i_jump)
     i_decayed = i_jump + di
 
     # Compute adaptation update
-    da = dt * p.tau_ada_inv * (p.adaptation_current * (state.v - p.v_leak) - state.a)
+    da = dt * (p.tau_ada_inv * (p.adaptation_current * (state.v - p.v_leak) - state.a))
     a_decayed = state.a + da
 
     # compute new spikes
@@ -204,15 +204,15 @@ def lif_adex_feed_forward_step(
     # compute voltage updates
     dv_leak = p.v_leak - state.v
     dv_exp = p.delta_T * torch.exp((state.v - p.v_th) / p.delta_T)
-    dv = dt * p.tau_mem_inv * (dv_leak + dv_exp + i_jump - state.a)
+    dv = dt * (p.tau_mem_inv * (dv_leak + dv_exp + i_jump - state.a))
     v_decayed = state.v + dv
 
     # compute current updates
-    di = -dt * p.tau_syn_inv * i_jump
+    di = -dt * (p.tau_syn_inv * i_jump)
     i_decayed = i_jump + di
 
     # Compute adaptation update
-    da = dt * p.tau_ada_inv * (p.adaptation_current * (state.v - p.v_leak) - state.a)
+    da = dt * (p.tau_ada_inv * (p.adaptation_current * (state.v - p.v_leak) - state.a))
     a_decayed = state.a + da
 
     # compute new spikes
@@ -268,7 +268,7 @@ def lif_adex_current_encoder(
     """
     dv_leak = p.v_leak - voltage
     dv_exp = p.delta_T * torch.exp((voltage - p.v_th) / p.delta_T)
-    dv = dt * p.tau_mem_inv * (dv_leak + dv_exp + input_current - adaptation)
+    dv = dt * (p.tau_mem_inv * (dv_leak + dv_exp + input_current - adaptation))
     voltage = voltage + dv
     z = threshold(voltage - p.v_th, p.method, p.alpha)
 

@@ -126,15 +126,15 @@ def lsnn_step(
         dt (float): Integration timestep to use
     """
     # compute voltage decay
-    dv = dt * p.tau_mem_inv * ((p.v_leak - state.v) + state.i)
+    dv = dt * (p.tau_mem_inv * ((p.v_leak - state.v) + state.i))
     v_decayed = state.v + dv
 
     # compute current decay
-    di = -dt * p.tau_syn_inv * state.i
+    di = -dt * (p.tau_syn_inv * state.i)
     i_decayed = state.i + di
 
     # compute threshold adaptation update
-    db = dt * p.tau_adapt_inv * (p.v_th - state.b)
+    db = dt * (p.tau_adapt_inv * (p.v_th - state.b))
     b_decayed = state.b + db
 
     # compute new spikes
@@ -197,15 +197,15 @@ def ada_lif_step(
         dt (float): Integration timestep to use
     """
     # compute voltage updates
-    dv = dt * p.tau_mem_inv * ((p.v_leak - state.v) + state.i - state.b)
+    dv = dt * (p.tau_mem_inv * ((p.v_leak - state.v) + state.i - state.b))
     v_decayed = state.v + dv
 
     # compute current updates
-    di = -dt * p.tau_syn_inv * state.i
+    di = -dt * (p.tau_syn_inv * state.i)
     i_decayed = state.i + di
 
     # compute threshold updates
-    db = -dt * p.tau_adapt_inv * state.b
+    db = -dt * (p.tau_adapt_inv * state.b)
     b_decayed = state.b + db
 
     # compute new spikes
@@ -274,15 +274,15 @@ def lsnn_feed_forward_step(
         dt (float): Integration timestep to use
     """
     # compute voltage updates
-    dv = dt * p.tau_mem_inv * ((p.v_leak - state.v) + state.i)
+    dv = dt * (p.tau_mem_inv * ((p.v_leak - state.v) + state.i))
     v_decayed = state.v + dv
 
     # compute current updates
-    di = -dt * p.tau_syn_inv * state.i
+    di = -dt * (p.tau_syn_inv * state.i)
     i_decayed = state.i + di
 
     # compute threshold updates
-    db = dt * p.tau_adapt_inv * (p.v_th - state.b)
+    db = dt * (p.tau_adapt_inv * (p.v_th - state.b))
     b_decayed = state.b + db
 
     # compute new spikes
