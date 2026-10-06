@@ -317,8 +317,14 @@ def izhikevich_recurrent_step(
     input_current = torch.nn.functional.linear(input_current, input_weights)
     recurrent_current = torch.nn.functional.linear(s.z, recurrent_weights)
     v_ = s.v + dt * (
-        p.tau_inv * (
-            p.sq * s.v**2 + p.mn * s.v + p.bias - s.u + input_current + recurrent_current
+        p.tau_inv
+        * (
+            p.sq * s.v**2
+            + p.mn * s.v
+            + p.bias
+            - s.u
+            + input_current
+            + recurrent_current
         )
     )
     u_ = s.u + dt * (p.tau_inv * p.a * (p.b * s.v - s.u))
