@@ -1,8 +1,8 @@
+from typing import NamedTuple, Tuple
+
 import torch
 
 from norse.torch.functional.parameter import _float_parameter
-from typing import NamedTuple, Tuple
-
 from norse.torch.functional.threshold import threshold
 
 
